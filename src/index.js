@@ -1,12 +1,15 @@
 const express = require("express");
-const ejs = require("ejs");
-const userRouter = require("./routes/user.js");
-const mongoose = require("mongoose");
+const bodyParser = require("body-parser");
 
+const ejs = require("ejs");
+const mongoose = require("mongoose");
 const app = express();
+
+const userRouter = require("./routes/userRoutes.js");
 const port = 9500;
 
-app.user('/api', userRouter);
+app.use(bodyParser.json());
+app.use('/api', userRouter);
 app.set('view engine', 'ejs');
 //routes
 app.get("/buscar",(req,res) => {
@@ -14,7 +17,7 @@ app.get("/buscar",(req,res) => {
 });
 
 //connection de mongodb
-mongoose.connect("mongodb+srv://adramirez:axel__15@cluster0.xdwihik.mongodb.net/?retryWrites=true&w=majority")
+mongoose.connect("mongodb+srv://adramirez:axel__15@cluster0.xdwihik.mongodb.net/adramirez?retryWrites=true&w=majority")
 .then(() => console.log("connection con mongonDB exitosa"))
 .catch((error) => console.log(error));
 
