@@ -7,7 +7,6 @@ const router = express.Router();
 router.post('/users', (req, res) => {
   // Crear una nueva instancia de usuario utilizando el modelo User
   const user = new User(req.body);
-  
   // Guardar el usuario en la base de datos
   user.save()
     .then((data) => res.json(data))

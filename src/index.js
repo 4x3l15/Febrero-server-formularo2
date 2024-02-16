@@ -9,6 +9,7 @@ const userRouter = require("./routes/userRoutes.js");
 const port = 9500;
 
 app.use(bodyParser.json());
+app.use(express.json());
 app.use('/api', userRouter);
 app.set('view engine', 'ejs');
 //routes
