@@ -18,7 +18,7 @@ app.get("/buscar",(req,res) => {
 });
 
 //connection de mongodb
-mongoose.connect("mongodb+srv://adramirez:axel__15@cluster0.xdwihik.mongodb.net/adramirez?retryWrites=true&w=majority")
+mongoose.connect("mongodb+srv://adramirez:axel__15@cluster0.ncj4zui.mongodb.net/?retryWrites=true&w=majority")
 .then(() => console.log("connection con mongonDB exitosa"))
 .catch((error) => console.log(error));
 
