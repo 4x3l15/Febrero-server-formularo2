@@ -1,13 +1,11 @@
 const express = require("express");
-const userSchema = require("../models/user");
+const User = require("../models/user.js"); // Asegúrate de que la ruta sea correcta
 
 const router = express.Router();
 
-// Ruta para crear un nuevo usuario
+// Crear un nuevo usuario
 router.post('/users', (req, res) => {
-  // Crear una nueva instancia de usuario utilizando el modelo User
-  const user = new userSchema(req.body); // Debes usar el modelo User, no userSchema
-  // Guardar el usuario en la base de datos
+  const user = new User(req.body);
   user.save()
     .then((data) => res.json(data))
     .catch((error) => res.json({ message: error.message }));
@@ -15,8 +13,7 @@ router.post('/users', (req, res) => {
 
 // Obtener usuarios
 router.get('/users', (req, res) => {
-  userSchema
-    .find()
+  User.find()
     .then((data) => res.json(data))
     .catch((error) => res.json({ message: error.message }));
 });
@@ -24,8 +21,7 @@ router.get('/users', (req, res) => {
 // Obtener un usuario
 router.get('/users/:id', (req, res) => {
   const { id } = req.params;
-  userSchema
-    .findById(id)
+  User.findById(id)
     .then((data) => res.json(data))
     .catch((error) => res.json({ message: error.message }));
 });
@@ -35,8 +31,7 @@ router.put('/users/:id', (req, res) => {
   const { id } = req.params;
   const { name, age, gmail } = req.body;
 
-  userSchema
-    .updateOne({ _id: id }, { $set: name, age, gmail }, { new: true })
+  User.updateOne({ _id: id }, { $set: { name, age, gmail }})
     .then((data) => res.json(data))
     .catch((error) => res.json({ message: error.message }));
 });
@@ -45,12 +40,9 @@ router.put('/users/:id', (req, res) => {
 router.delete('/users/:id', (req, res) => {
   const { id } = req.params;
 
-  userSchema
-    .remove({ _id: id })
+  User.deleteOne({ _id: id })
     .then((data) => res.json(data))
     .catch((error) => res.json({ message: error.message }));
 });
 
-
 module.exports = router;
-
