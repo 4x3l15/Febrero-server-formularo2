@@ -45,4 +45,4 @@ Router.delete('/users/:id', (req, res) => {
     .catch((error) => res.json({ message: error.message }));
 });
 
-module.exports = router;
+module.exports = Router;
