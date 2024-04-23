@@ -5,13 +5,15 @@ const app = express();
 const userRouter = require("./routes/userRoutes.js");
 const port = 9500;
 
+// Defino el motor de plantillas a utilizar
+app.set('view engine', 'ejs');
 //routers
-app.use(bodyParser.json());
-app.use(express.json());
 app.use('/api', userRouter);
+app.use(bodyParser.json(''));
+app.use(express.json(''));
 
 // Conexión a MongoDB
-mongoose.connect("mongodb+srv://adramirez:axel__15@cluster0.ncj4zui.mongodb.net/?retryWrites=true&w=majority")
+mongoose.connect("mongodb+srv://Adramirez:ADRAMIREEZ@cluster0.8wgmdjb.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
   .then(() => console.log("Conexión con MongoDB exitosa"))
   .catch((error) => console.log(error));
 
