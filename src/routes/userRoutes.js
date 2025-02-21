@@ -1,43 +1,41 @@
 const express = require("express");
-const User = require("../models/user.js"); // Asegúrate de que la ruta sea correcta
+const userSchema = require("../models/user.js");
 
 const Router = express.Router();
 
-// Crear un nuevo usuario
-Router.post('/users', (req, res) => {
-  const user = new User(req.body);
-  user.save()
-    .then((data) => res.json(data))
-    .catch((error) => res.json({ message: error.message }));
+Router.post('/users', (req,res) => {
+  const User = new userSchema(req.body);
+  User.save()
+  .then((data) => res.json(data))
+  .catch((error) => res.json({ message: error.message }))
 });
 
-// Obtener usuarios
-Router.get('/users', (req, res) => {
-  User.find()
-    .then((data) => res.json(data))
-    .catch((error) => res.json({ message: error.message }));
+Router.get('/users', (req,res) => {
+  userSchema.find()
+  .then((data) => console.log(data))
+  .catch((error) => res.json({ message: error.message }))
 });
 
-// Obtener un usuario
-Router.get('/users/:id', (req, res) => {
+Router.get('/users/:id', (req,res) => {
   const { id } = req.params;
-  User.findById(id)
-    .then((data) => res.json(data))
-    .catch((error) => res.json({ message: error.message }));
+  userSchema.findById( { _id: id } )
+  .then((data) => res.json(data))
+  .catch((error) => res.json({ message: error.message }))
 });
 
-// Actualizar un usuario
-Router.put('/users/:id', (req, res) => {
+Router.put('/users/:id', (req,res) => {
   const { id } = req.params;
-  const { name, age, gmail } = req.body;
+  const { autor, titulo, año, paginas } = req.body;
+  userSchema.updateOne( { _id: id }, { $set: { autor, titulo, año, paginas } } )
+  .then((data) => res.json(data))
+  .catch((error) => res.json({ message: error.message }))
 });
 
-// Borrar un usuario
-Router.delete('/users/:id', (req, res) => {
+Router.delete('/users/:id', (req,res) => {
   const { id } = req.params;
-
-  User.deleteOne({ _id: id })
-    .then((data) => res.json(data))
-    .catch((error) => res.json({ message: error.message }));
+  userSchema.deleteOne( { _id: id } )
+  .then((data) => res.json(data))
+  .catch((error) => res.json({ message: error.message }))
 });
+
 module.exports = Router;
